@@ -1,7 +1,5 @@
 import random
-import numpy as np
 import time
-
 
 
 class Memorama(object):
