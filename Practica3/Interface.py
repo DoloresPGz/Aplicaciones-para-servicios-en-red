@@ -55,7 +55,8 @@ class MainFrame(tk.Frame):
         self.parent.set_cliente(Cliente.Cliente(host, port))
         if self.parent.cliente.connect_sock():
             if self.parent.cliente.estado_partida():
-                self.parent.cambiar_frame(Espera)
+                arg = self.parent.cliente.ingresar_partida()
+                self.parent.cambiar_frame(Espera, arg)
             else:
                 self.parent.cambiar_frame(Jugador)
 
@@ -135,6 +136,8 @@ class Espera(tk.Frame):
 
     def counter_label(self, label):
         def count():
+            self.parent.cliente.no_jugadore()
+            #self.parent.cambiar_frame(Espera, arg)
             no_jugador = self.parent.cliente.get_no_jugadores()
             label.config(text=str(no_jugador) + "/" + str(self.jugadores))
             if int(self.jugadores) == int(no_jugador):

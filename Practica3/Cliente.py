@@ -81,7 +81,6 @@ class Cliente:
         }
 
         msg = json.dumps(msg)
-
         self.socket.send(msg.encode())
         time.sleep(5)
         mensaje = self.socket.recv(self.BUFFER).decode("utf-8")
@@ -90,15 +89,32 @@ class Cliente:
 
         return estructura["estado_partida"]
 
-    def ingresar_partida(self, id_partida):
+    def ingresar_partida(self, id_partida = 1):
         msg = {
             "id_partida" : id_partida,
             "movimiento" : "ingresar_partida"
         }
-
         msg = json.dumps(msg)
+        self.socket.send(msg.encode())
+        time.sleep(5)
+        mensaje = self.socket.recv(self.BUFFER).decode("utf-8")
+        estructura = json.loads(mensaje)
+        logging.debug("Mensaje recibido %s", mensaje)
 
+        return estructura
 
+    def no_jugadore(self):
+        msg = {
+            "movimiento": "no_jugadores"
+        }
+        msg = json.dumps(msg)
+        self.socket.send(msg.encode())
+        time.sleep(5)
+        mensaje = self.socket.recv(self.BUFFER).decode("utf-8")
+        estructura = json.loads(mensaje)
+        logging.debug("Mensaje recibido %s", mensaje)
+
+        self.no_jugadores = estructura.get["no_jugadores"]
 
 
 

@@ -24,7 +24,7 @@ class Partida:
 
     # Recibe el identificador de un hilo
     def agregar_jugador(self, jugador):
-        if len(self.jugadores) <= self.no_jugadores:
+        if len(self.jugadores) == self.no_jugadores:
             self.jugadores.append(jugador)
             logging.debug("Jugador agregado a la partida %s", self.id_partida)
         else:
@@ -43,6 +43,12 @@ class Partida:
 
     def get_no_jugadores(self):
         return self.no_jugadores
+
+    def get_nivel(self):
+        return self.nivel
+
+    def get_tipo_partida(self):
+        return self.tipo_partida
 
     def get_lugares_disponibles(self):
         return self.no_jugadores - len(self.jugadores)

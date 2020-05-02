@@ -32,7 +32,8 @@ class Servidor:
             "asignar_turno" : self.asignar_turno,
             "enviar_resultado" : self.enviar_resultado,
             "nuevo_jugador" : self.nuevo_jugador,
-            "partida" : self.partida
+            "partida" : self.partida,
+            "no_jugadores" : self.no_jugadores
 
         }
 
@@ -104,7 +105,17 @@ class Servidor:
     def ingresar_partida(self, conn, estructura):
         #no_partida = estructura["no_partida"]
         jugador = conn
-        self.partidas_list[0].agregar_jugador(jugador)
+        self.partidas_list[0].empezar_partida(jugador)
+        msg = {"tipo": self.partidas_list[0].get_tipo_partida(), "no_jugador": self.partidas_list[0].get_no_jugadores(), "nivel": self.partidas_list[0].get_nivel()}
+        msg = json.dumps(msg)
+        conn.send(msg.encode())
+
+    def no_jugadores(self, conn, estructura):
+        msg = {
+            "no_jugadores" : len(self.sockets_list)
+        }
+        msg = json.dumps(msg)
+        conn.send(msg.encode())
 
     def movimiento_cliente(self, conn, estructura):
 
