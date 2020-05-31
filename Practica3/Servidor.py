@@ -135,6 +135,4 @@ class Servidor:
 
 
 servidor = Servidor()
-
 servidor.nueva_conexion()
-
